@@ -60,20 +60,20 @@ class Rover
 		CARDINAL_DIRECTIONS[@orientation]
 	end
 
-	def move_backward
-		map = orientation_map[:backward][current_direction]
+	def move(direction)
+		map = orientation_map[direction][current_direction]
 		@x = map[:new_x]
 		@y = map[:new_y]
 
 		current_coordinates
 	end
 
-	def move_forward
-		map = orientation_map[:forward][current_direction]
-		@x = map[:new_x]
-		@y = map[:new_y]
+	def backward
+		move(:backward)
+	end
 
-		current_coordinates
+	def forward
+		move(:forward)
 	end
 
 	def change_orientation(value)
