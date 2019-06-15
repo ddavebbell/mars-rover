@@ -3,24 +3,6 @@ class Rover
 	CARDINAL_DIRECTIONS = %i[north east south west].freeze
 	MAX_ORIENTATION_VALUE = CARDINAL_DIRECTIONS.length - 1
 	MIN_ORIENTATION_VALUE = 0
-	ORIENTATION_MAP = {
-		north: {
-			new_y: @y + 1,
-			new_x: @x
-		},
-		south: {
-			new_y: @y - 1,
-			new_x: @x
-		},
-		east: {
-			new_y: @y,
-			new_x: @x + 1
-		},
-		west: {
-			new_y: @y,
-			new_x: @x - 1
-		}
-	}
 
 	def initialize
 		@orientation = 0
@@ -29,7 +11,24 @@ class Rover
 	end
 
 	def orientation_map
-		ORIENTATION_MAP
+		{
+			north: {
+				new_y: @y + 1,
+				new_x: @x
+			},
+			south: {
+				new_y: @y - 1,
+				new_x: @x
+			},
+			east: {
+				new_y: @y,
+				new_x: @x + 1
+			},
+			west: {
+				new_y: @y,
+				new_x: @x - 1
+			}
+		}
 	end
 
 	def correct_orientation
