@@ -10,6 +10,34 @@ class Rover
 		@y = 0
 	end
 
+	def backward
+		move(:backward)
+	end
+
+	def forward
+		move(:forward)
+	end
+
+	def spin_left
+		change_orientation(-1)
+	end
+
+	def spin_right
+		change_orientation(1)
+	end
+
+	private
+
+	def change_orientation(value)
+		@orientation += value
+		correct_orientation
+		current_coordinates
+	end
+
+	def current_coordinates
+		puts "I am currently at coordinates (#{@x}, #{@y}), facing #{current_direction.to_s} Commander"
+	end
+
 	def orientation_map
 		{
 			forward: {
@@ -66,31 +94,5 @@ class Rover
 		@y = map[:new_y]
 
 		current_coordinates
-	end
-
-	def backward
-		move(:backward)
-	end
-
-	def forward
-		move(:forward)
-	end
-
-	def change_orientation(value)
-		@orientation += value
-		correct_orientation
-		current_coordinates
-	end
-
-	def spin_left
-		change_orientation(-1)
-	end
-
-	def spin_right
-		change_orientation(1)
-	end
-
-	def current_coordinates
-		puts "I am currently at coordinates (#{@x}, #{@y}), facing #{current_direction.to_s} Commander"
 	end
 end
