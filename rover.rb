@@ -12,21 +12,41 @@ class Rover
 
 	def orientation_map
 		{
-			north: {
-				new_y: @y + 1,
-				new_x: @x
+			forward: {
+				north: {
+					new_y: @y + 1,
+					new_x: @x
+				},
+				south: {
+					new_y: @y - 1,
+					new_x: @x
+				},
+				east: {
+					new_y: @y,
+					new_x: @x + 1
+				},
+				west: {
+					new_y: @y,
+					new_x: @x - 1
+				}
 			},
-			south: {
-				new_y: @y - 1,
-				new_x: @x
-			},
-			east: {
-				new_y: @y,
-				new_x: @x + 1
-			},
-			west: {
-				new_y: @y,
-				new_x: @x - 1
+			backward: {
+				north: {
+					new_y: @y - 1,
+					new_x: @x
+				},
+				south: {
+					new_y: @y + 1,
+					new_x: @x
+				},
+				east: {
+					new_y: @y,
+					new_x: @x - 1
+				},
+				west: {
+					new_y: @y,
+					new_x: @x + 1
+				}
 			}
 		}
 	end
@@ -40,8 +60,16 @@ class Rover
 		CARDINAL_DIRECTIONS[@orientation]
 	end
 
+	def move_backward
+		map = orientation_map[:backward][current_direction]
+		@x = map[:new_x]
+		@y = map[:new_y]
+
+		current_coordinates
+	end
+
 	def move_forward
-		map = orientation_map[current_direction]
+		map = orientation_map[:forward][current_direction]
 		@x = map[:new_x]
 		@y = map[:new_y]
 
