@@ -1,42 +1,69 @@
 class Rover
 	attr_accessor :orientation, :x, :y
+	CARDINAL_DIRECTIONS = %i[north east south west].freeze
+	MAX_ORIENTATION_VALUE = CARDINAL_DIRECTIONS.length - 1
+	MIN_ORIENTATION_VALUE = 0
+	ORIENTATION_MAP = {
+		north: {
+			new_y: @y + 1,
+			new_x: @x
+		},
+		south: {
+			new_y: @y - 1,
+			new_x: @x
+		},
+		east: {
+			new_y: @y,
+			new_x: @x + 1
+		},
+		west: {
+			new_y: @y,
+			new_x: @x - 1
+		}
+	}
 
 	def initialize
-		@orientation = :north
+		@orientation = 0
 		@x = 0
 		@y = 0
 	end
 
 	def orientation_map
-		{
-			north: {
-				new_y: @y + 1,
-				new_x: @x
-			},
-			south: {
-				new_y: @y - 1,
-				new_x: @x
-			},
-			east: {
-				new_y: @y,
-				new_x: @x + 1
-			},
-			west: {
-				new_y: @y,
-				new_x: @x - 1
-			}
-		}
+		ORIENTATION_MAP
 	end
 
-	def forward
-		map = orientation_map[@orientation]
+	def correct_orientation
+		@orientation = MIN_ORIENTATION_VALUE if @orientation > MAX_ORIENTATION_VALUE
+		@orientation = MAX_ORIENTATION_VALUE if @orientation < MIN_ORIENTATION_VALUE
+	end
+
+	def current_direction
+		CARDINAL_DIRECTIONS[@orientation]
+	end
+
+	def move_forward
+		map = orientation_map[current_direction]
 		@x = map[:new_x]
 		@y = map[:new_y]
 
 		current_coordinates
 	end
 
+	def change_orientation(value)
+		@orientation += value
+		correct_orientation
+		current_coordinates
+	end
+
+	def spin_left
+		change_orientation(-1)
+	end
+
+	def spin_right
+		change_orientation(1)
+	end
+
 	def current_coordinates
-		puts "I am currently at coordinates (#{@x}, #{@y}) Commander"
+		puts "I am currently at coordinates (#{@x}, #{@y}), facing #{current_direction.to_s} Commander"
 	end
 end
